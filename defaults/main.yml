@@ -1,0 +1,5 @@
+---
+
+sc_conf_dir: "/home/{{ansible_env.SUDO_USER}}/.config/SuperCollider/"
+sc_ext_dir: "/home/{{ansible_env.SUDO_USER}}/.local/share/SuperCollider/Extensions/"
+sc_synthdef_dir: "ansible_tidal_synthdefs"
