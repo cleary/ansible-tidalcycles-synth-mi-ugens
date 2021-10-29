@@ -1,0 +1,16 @@
+---
+
+- block:
+  - set_fact:
+      boottidal_hs: "/home/{{ansible_env.SUDO_USER}}/.config/nvim/plugged/vim-tidal/Tidal.ghci"
+  
+  - name: load mutable-instruments parameter file in neovim
+    lineinfile:
+        path: "{{ boottidal_hs }}"
+        insertbefore: '^:set prompt (.*$)'
+        line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
+  become: yes
+  become_method: su
+  become_user: "{{ansible_env.SUDO_USER}}"
+  become_flags: '-s /bin/bash'
+  when: editor is defined and editor == "neovim"
