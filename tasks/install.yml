@@ -8,13 +8,16 @@
 
   - name: create ugens dest directories
     file:
-      path: "{{ item }}"
+      path: "{{ sc_ext_dir }}"
       state: directory
       mode: 0775
       recurse: yes
-    with_items:
-      - "{{ sc_ext_dir }}"
-      - "{{ sc_conf_dir }}/{{ sc_synthdef_dir }}"
+
+  - file:
+      path: "{{ sc_conf_dir }}/{{ sc_synthdef_dir }}"
+      state: directory
+      mode: 0775
+      recurse: yes
 
   - name: download/extract mutable instruments ugens from ndr_brt releases
     unarchive:
