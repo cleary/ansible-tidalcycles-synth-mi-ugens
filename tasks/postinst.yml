@@ -61,7 +61,7 @@
     set_fact:
       boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
 
-  - name: load mutable-instruments parameter file in tidal boot file
+  - name: load mutable-instruments parameter file in vscode
     lineinfile:
         path: "{{ boottidal_hs }}"
         insertbefore: '^:set prompt (.*$)'
@@ -71,3 +71,11 @@
   become_user: "{{ansible_env.SUDO_USER}}"
   become_flags: '-s /bin/bash'
   when: editor == "vscode"
+
+- block:
+  - name: load mutable-instruments parameter file in feedforward
+    lineinfile:
+        path: "/usr/local/bin/feedforward"
+        insertafter: '^FFARGS=.*'
+        line: "FFARGS=\"$FFARGS -s /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs\""
+  when: editor == "feedforward"
