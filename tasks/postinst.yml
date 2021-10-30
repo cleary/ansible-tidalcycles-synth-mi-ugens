@@ -50,3 +50,24 @@
   become_user: "{{ansible_env.SUDO_USER}}"
   become_flags: '-s /bin/bash'
   when: editor == "vim"
+
+- block:
+  - name: get default BootTidal.hs locations
+    shell: ghc-pkg field tidal data-dir | head -n 1 | awk '{print $2}'
+    register: tidloc
+    changed_when: False
+
+  - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
+    set_fact:
+      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
+
+  - name: load mutable-instruments parameter file in tidal boot file
+    lineinfile:
+        path: "{{ boottidal_hs }}"
+        insertbefore: '^:set prompt (.*$)'
+        line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
+  become: yes
+  become_method: su
+  become_user: "{{ansible_env.SUDO_USER}}"
+  become_flags: '-s /bin/bash'
+  when: editor == "vscode"
