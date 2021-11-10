@@ -19,9 +19,9 @@
       mode: 0775
       recurse: yes
 
-  - name: download/extract mutable instruments ugens from ndr_brt releases
+  - name: download/extract mutable instruments ugens bundle
     unarchive:
-      src: https://github.com/ndr-brt/mi-UGens/releases/download/v0.0.24/mi-UGens-Linux.zip
+      src: "{{ miugen_package_src }}"
       dest: "{{ sc_ext_dir }}"
       remote_src: True
 
@@ -32,8 +32,8 @@
       mode: '0775'
 
   - name: copy mutable instruments ugens synth defs
-    template:
-      src: "templates/mutable-instruments-synthdefs.scd.template"
+    get_url:
+      url: "{{ miugen_synthdef_src }}"
       dest: "{{ sc_conf_dir }}/{{ sc_synthdef_dir }}/mutable-instruments.scd"
       mode: 0640
 
