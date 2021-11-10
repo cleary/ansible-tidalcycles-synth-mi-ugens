@@ -5,4 +5,4 @@ sc_synthdef_dir: "ansible_tidal_synthdefs"
 editor: None
 
 miugen_package_src: https://github.com/v7b1/mi-UGens/releases/download/v0.0.3/mi-UGens-Linux.zip
-miugen_synthdef_src: https://raw.githubusercontent.com/cleary/ansible-tidalcycles-synth-mi-ugens/master/templates/mutable-instruments-synthdefs.scd
+miugen_synthdef_src: https://raw.githubusercontent.com/cleary/ansible-tidalcycles-synth-mi-ugens/master/files/mutable-instruments-synthdefs.scd
