@@ -44,8 +44,8 @@
       recurse: yes
 
   - name: copy mutable-instruments params file to scripts dir
-    template:
-      src: templates/mutable-instruments-ugens_parameters.hs.template
+    get_url:
+      url: "{{ miugen_params_src }}"
       dest: "/home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
       mode: 0640
 
