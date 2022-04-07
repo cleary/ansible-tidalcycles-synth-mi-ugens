@@ -1,9 +1,15 @@
 ---
 
 - block:
-  - set_fact:
-      boottidal_hs: "/home/{{ansible_env.SUDO_USER}}/.local/share/nvim/plugged/vim-tidal/Tidal.ghci"
-  
+  - name: get default BootTidal.hs locations
+    shell: ghc-pkg field tidal data-dir | head -n 1 | awk '{print $2}'
+    register: tidloc
+    changed_when: False
+
+  - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
+    set_fact:
+      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
+
   - name: load mutable-instruments parameter file in neovim
     lineinfile:
         path: "{{ boottidal_hs }}"
@@ -37,8 +43,14 @@
   when: editor == "atom"
 
 - block:
-  - set_fact:
-      boottidal_hs: "/home/{{ansible_env.SUDO_USER}}/.vim/plugged/vim-tidal/Tidal.ghci"
+  - name: get default BootTidal.hs locations
+    shell: ghc-pkg field tidal data-dir | head -n 1 | awk '{print $2}'
+    register: tidloc
+    changed_when: False
+
+  - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
+    set_fact:
+      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
 
   - name: load mutable-instruments parameter file in vim
     lineinfile:
