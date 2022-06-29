@@ -2,13 +2,13 @@
 
 - block:
   - name: get default BootTidal.hs locations
-    shell: ghc-pkg field tidal data-dir | head -n 1 | awk '{print $2}'
+    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
     register: tidloc
     changed_when: False
 
   - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
     set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
+      boottidal_hs: "{{ tidloc.stdout }}"
 
   - name: load mutable-instruments parameter file in neovim
     lineinfile:
@@ -23,13 +23,13 @@
 
 - block:
   - name: get default BootTidal.hs locations
-    shell: ghc-pkg field tidal data-dir | head -n 1 | awk '{print $2}'
+    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
     register: tidloc
     changed_when: False
 
   - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
     set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
+      boottidal_hs: "{{ tidloc.stdout }}"
 
   - name: load mutable-instruments parameter file in atom
     lineinfile:
@@ -44,13 +44,13 @@
 
 - block:
   - name: get default BootTidal.hs locations
-    shell: ghc-pkg field tidal data-dir | head -n 1 | awk '{print $2}'
+    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
     register: tidloc
     changed_when: False
 
   - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
     set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
+      boottidal_hs: "{{ tidloc.stdout }}"
 
   - name: load mutable-instruments parameter file in vim
     lineinfile:
@@ -65,13 +65,13 @@
 
 - block:
   - name: get default BootTidal.hs locations
-    shell: ghc-pkg field tidal data-dir | head -n 1 | awk '{print $2}'
+    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
     register: tidloc
     changed_when: False
 
   - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
     set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
+      boottidal_hs: "{{ tidloc.stdout }}"
 
   - name: load mutable-instruments parameter file in vscode
     lineinfile:
