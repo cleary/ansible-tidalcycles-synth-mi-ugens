@@ -1,93 +1,50 @@
 ---
-
 - block:
   - name: get default BootTidal.hs locations
-    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
+    shell: ghci -e Paths_tidal.getDataDir | head -n 1 | awk '{print substr($0,2,length()-2);}'
     register: tidloc
     changed_when: False
 
   - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
     set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}"
+      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
 
   - name: load mutable-instruments parameter file in neovim
     lineinfile:
         path: "{{ boottidal_hs }}"
         insertbefore: '^:set prompt (.*$)'
         line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
-  become: yes
-  become_method: su
-  become_user: "{{ansible_env.SUDO_USER}}"
-  become_flags: '-s /bin/bash'
-  when: editor == "neovim"
-
-- block:
-  - name: get default BootTidal.hs locations
-    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
-    register: tidloc
-    changed_when: False
-
-  - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
-    set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}"
+    when: editor == "neovim"
 
   - name: load mutable-instruments parameter file in atom
     lineinfile:
         path: "{{ boottidal_hs }}"
         insertbefore: '^:set prompt (.*$)'
         line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
-  become: yes
-  become_method: su
-  become_user: "{{ansible_env.SUDO_USER}}"
-  become_flags: '-s /bin/bash'
-  when: editor == "atom"
-
-- block:
-  - name: get default BootTidal.hs locations
-    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
-    register: tidloc
-    changed_when: False
-
-  - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
-    set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}"
+    when: editor == "atom"
 
   - name: load mutable-instruments parameter file in vim
     lineinfile:
         path: "{{ boottidal_hs }}"
         insertbefore: '^:set prompt (.*$)'
         line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
-  become: yes
-  become_method: su
-  become_user: "{{ansible_env.SUDO_USER}}"
-  become_flags: '-s /bin/bash'
-  when: editor == "vim"
-
-- block:
-  - name: get default BootTidal.hs locations
-    shell: find ~/.cabal -name BootTidal.hs | sort -V | tail -n 1
-    register: tidloc
-    changed_when: False
-
-  - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
-    set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}"
+    when: editor == "vim"
 
   - name: load mutable-instruments parameter file in vscode
     lineinfile:
         path: "{{ boottidal_hs }}"
         insertbefore: '^:set prompt (.*$)'
         line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
+    when: editor == "vscode"
+
   become: yes
   become_method: su
   become_user: "{{ansible_env.SUDO_USER}}"
   become_flags: '-s /bin/bash'
-  when: editor == "vscode"
 
-- block:
-  - name: load mutable-instruments parameter file in feedforward
-    lineinfile:
-        path: "/usr/local/bin/feedforward"
-        insertafter: '^FFARGS=.*'
-        line: "FFARGS=\"$FFARGS -s /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs\""
+- name: load mutable-instruments parameter file in feedforward
+  lineinfile:
+      path: "/usr/local/bin/feedforward"
+      insertafter: '^FFARGS=.*'
+      line: "FFARGS=\"$FFARGS -s /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs\""
   when: editor == "feedforward"
