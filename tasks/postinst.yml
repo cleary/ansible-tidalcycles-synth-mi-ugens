@@ -9,13 +9,6 @@
     set_fact:
       boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
 
-  - name: load mutable-instruments parameter file in neovim
-    lineinfile:
-        path: "{{ boottidal_hs }}"
-        insertbefore: '^:set prompt (.*$)'
-        line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
-    when: editor == "neovim"
-
   - name: load mutable-instruments parameter file in atom
     lineinfile:
         path: "{{ boottidal_hs }}"
@@ -29,6 +22,20 @@
         insertbefore: '^:set prompt (.*$)'
         line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
     when: editor == "pulsar"
+
+  - name: load mutable-instruments parameter file in emacs
+    lineinfile:
+        path: "{{ boottidal_hs }}"
+        insertbefore: '^:set prompt (.*$)'
+        line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
+    when: editor == "emacs"
+
+  - name: load mutable-instruments parameter file in neovim
+    lineinfile:
+        path: "{{ boottidal_hs }}"
+        insertbefore: '^:set prompt (.*$)'
+        line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
+    when: editor == "neovim"
 
   - name: load mutable-instruments parameter file in vim
     lineinfile:
