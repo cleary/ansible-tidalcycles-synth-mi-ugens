@@ -7,7 +7,7 @@
 
   - name: "set default BootTidal.hs location ({{ tidloc.stdout }})"
     set_fact:
-      boottidal_hs: "{{ tidloc.stdout }}/BootTidal.hs"
+      boottidal_hs: "{{ tidloc.stdout }}"
 
   - name: load mutable-instruments parameter file in atom
     lineinfile:
