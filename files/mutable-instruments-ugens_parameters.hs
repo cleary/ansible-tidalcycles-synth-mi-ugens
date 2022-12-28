@@ -26,8 +26,8 @@ let
     cloudsspread = pF "cloudsspread"
     cloudsrvb = pF "cloudsrvb"
     cloudsfb = pF "cloudsfb"
-    cloudsfreeze = pF "cloudsfreeze"
-    cloudsmode = pF "cloudsmode"
+    cloudsfreeze = pI "cloudsfreeze"
+    cloudsmode = pI "cloudsmode"
     cloudslofi = pF "cloudslofi"
     clouds p s d t = cloudsgain 1 # cloudspos p # cloudssize s # cloudsdens d # cloudstex t
     cloudsblend w s f r = cloudsgain 1 # cloudswet w # cloudsspread s # cloudsfb f # cloudsrvb r
