@@ -9,13 +9,6 @@
     set_fact:
       boottidal_hs: "{{ tidloc.stdout }}"
 
-  - name: load mutable-instruments parameter file in atom
-    lineinfile:
-        path: "{{ boottidal_hs }}"
-        insertbefore: '^:set prompt (.*$)'
-        line: ":script /home/{{ansible_env.SUDO_USER}}/.local/share/ansible-tidalcycles/scripts/mutable-instruments-ugens_parameters.hs"
-    when: editor == "atom"
-
   - name: load mutable-instruments parameter file in pulsar
     lineinfile:
         path: "{{ boottidal_hs }}"
