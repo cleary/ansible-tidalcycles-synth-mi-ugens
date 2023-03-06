@@ -50,6 +50,7 @@
       decay: lpgdecay,
       lpg_colour: lpgcolour,
     );
+    sig = SplayAz.ar(~dirt.numChannels, sig, center:pan);
 
     Out.ar(out, DirtPan.ar(sig * volume, ~dirt.numChannels, pan));
   }).add;
